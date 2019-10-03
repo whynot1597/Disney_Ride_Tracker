@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 
 import './SearchForm.css'
@@ -6,7 +7,9 @@ import SearchResults from './SearchResults'
 
 import { searchGifs } from './api'
 
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
 
 const SearchForm = () => {
   const [error, setError] = useState(null)
@@ -39,7 +42,10 @@ const SearchForm = () => {
       <input name="query" type="text" value={query} onChange={handleQueryChange} />
 
       <div className="ButtonBar">
-        <Button type="submit" variant="contained" color="secondary">Search!</Button>
+        <Button type="submit" variant="contained" color="secondary" disabled={!query}>Search!</Button>
+        <Fab color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
       </div>
 
       {error && (
