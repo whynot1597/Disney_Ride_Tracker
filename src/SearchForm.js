@@ -10,6 +10,7 @@ import { searchGifs } from './api'
 import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab'
 import SearchIcon from '@material-ui/icons/Search'
+import Input from '@material-ui/core/Input';
 
 const SearchForm = () => {
   const [error, setError] = useState(null)
@@ -39,11 +40,11 @@ const SearchForm = () => {
     <form className="SearchForm" onSubmit={performQuery}>
       <p>Enter a search term:</p>
 
-      <input name="query" type="text" value={query} onChange={handleQueryChange} />
+      <Input name="query" type="text" value={query} onChange={handleQueryChange} />
 
       <div className="ButtonBar">
         <Button type="submit" variant="contained" color="secondary" disabled={!query}>Search!</Button>
-        <Fab color="primary" aria-label="search" type="submit">
+        <Fab color="primary" aria-label="search" type="submit" disabled={!query}>
           <SearchIcon />
         </Fab>
       </div>

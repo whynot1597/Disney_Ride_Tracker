@@ -5,11 +5,8 @@
 
 .SearchForm > .ButtonBar {
   display: flex;
-}
-
-.SearchForm > .ButtonBar > button {
+  justify-content: space-between;
   margin-left: auto;
-  margin-top: 1rem;
 }
 
 .SearchForm .error {
