@@ -6,6 +6,8 @@ import SearchResults from './SearchResults'
 
 import { searchGifs } from './api'
 
+import Button from '@material-ui/core/Button';
+
 const SearchForm = () => {
   const [error, setError] = useState(null)
   const [query, setQuery] = useState('')
@@ -37,7 +39,7 @@ const SearchForm = () => {
       <input name="query" type="text" value={query} onChange={handleQueryChange} />
 
       <div className="ButtonBar">
-        <button type="submit" disabled={!query}>Search Giphy!</button>
+        <Button type="submit" variant="contained" color="secondary">Search!</Button>
       </div>
 
       {error && (
