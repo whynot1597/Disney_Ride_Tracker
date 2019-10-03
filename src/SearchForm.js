@@ -8,7 +8,6 @@ import SearchResults from './SearchResults'
 import { searchGifs } from './api'
 
 import Button from '@material-ui/core/Button'
-import Fab from '@material-ui/core/Fab'
 import SearchIcon from '@material-ui/icons/Search'
 import Input from '@material-ui/core/Input';
 
@@ -43,10 +42,7 @@ const SearchForm = () => {
       <Input name="query" type="text" value={query} onChange={handleQueryChange} />
 
       <div className="ButtonBar">
-        <Button type="submit" variant="contained" color="secondary" disabled={!query}>Search!</Button>
-        <Fab color="primary" aria-label="search" type="submit" disabled={!query}>
-          <SearchIcon />
-        </Fab>
+        <Button type="submit" startIcon={<SearchIcon />} variant="contained" color="secondary" disabled={!query}>Search!</Button>
       </div>
 
       {error && (
