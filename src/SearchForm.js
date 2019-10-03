@@ -9,7 +9,7 @@ import { searchGifs } from './api'
 
 import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
+import SearchIcon from '@material-ui/icons/Search'
 
 const SearchForm = () => {
   const [error, setError] = useState(null)
@@ -43,8 +43,8 @@ const SearchForm = () => {
 
       <div className="ButtonBar">
         <Button type="submit" variant="contained" color="secondary" disabled={!query}>Search!</Button>
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
+        <Fab color="primary" aria-label="search" type="submit">
+          <SearchIcon />
         </Fab>
       </div>
 
