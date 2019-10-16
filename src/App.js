@@ -6,6 +6,8 @@ import AppHeader from './AppHeader'
 import SearchForm from './SearchForm'
 
 import { apiHost } from './api'
+import MenuAppBar from './MenuBar'
+import Drawer from './Drawer'
 
 const App = () => {
   // Because App is the "uppermost" component (see index.js), code in the useEffect function
@@ -18,6 +20,8 @@ const App = () => {
   // content (i.e., what the render() method returns for class-based components).
   return (
     <div className="App">
+      <Drawer />
+      <MenuAppBar />
       <AppHeader />
       <SearchForm />
     </div>
