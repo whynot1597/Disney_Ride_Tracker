@@ -9,6 +9,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MapIcon from '@material-ui/icons/Map';
 import RidesIcon from '@material-ui/icons/Apps';
 import WeatherIcon from '@material-ui/icons/WbSunny';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
   list: {
@@ -53,9 +55,17 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>Open Left</Button>
+          <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+          >
+              <MenuIcon />
+          </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer(false)}>
-        {sideList('left')}
+        {sideList()}
       </Drawer>
     </div>
   );
