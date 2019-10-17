@@ -1,29 +1,47 @@
-import React, { useEffect } from 'react'
+import React, { Component } from 'react';
+import withFirebaseAuth from 'react-with-firebase-auth'
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
+import './App.css';
 
-import './App.css'
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-import AppHeader from './AppHeader'
-import SearchForm from './SearchForm'
+class App extends Component {
+  render() {
+    const {
+      user,
+      signOut,
+      signInWithGoogle,
+    } = this.props;
 
-import { apiHost } from './api'
-import MenuAppBar from './MenuBar'
+    return (
+      <div className="App">
+        <header className="App-header">
+          {
+            user
+              ? <p>Hello, {user.displayName}</p> //Go to Home.js
+              : <p>Please sign in.</p>
+          }
 
-const App = () => {
-  // Because App is the "uppermost" component (see index.js), code in the useEffect function
-  // is equivalent to an overall initialization routine. Note however that every component
-  // can have its own useEffect, and so initialization can be separated on a per-component
-  // basis.
-  useEffect(() => apiHost('http://api.giphy.com/v1/'))
-
-  // When React components are implemented as functions, their return value is the component’s
-  // content (i.e., what the render() method returns for class-based components).
-  return (
-    <div className="App">
-      <MenuAppBar />
-      <AppHeader />
-      <SearchForm />
-    </div>
-  )
+          {
+            user
+              ? <button onClick={signOut}>Sign out</button>
+              : <button onClick={signInWithGoogle}>Sign in with Google</button>
+          }
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App
+const firebaseAppAuth = firebaseApp.auth();
+
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(App);

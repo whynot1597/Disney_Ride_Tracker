@@ -1,7 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -21,6 +21,11 @@ const useStyles = makeStyles({
   },
 });
 
+const handleRedirect = (route) => {
+    return <Redirect to='/target' />
+}
+
+
 export default function TemporaryDrawer() {
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -39,7 +44,7 @@ export default function TemporaryDrawer() {
     <div
       className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(false)}
+      onClick={handleRedirect('test')}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
