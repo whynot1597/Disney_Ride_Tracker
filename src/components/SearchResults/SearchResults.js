@@ -2,7 +2,7 @@ import React from 'react'
 
 import './SearchResults.css'
 
-import GiphyImage from '../../GiphyImage'
+import GiphyImage from '../GiphyImage'
 
 const SearchResults = props => (
   <div className="SearchResults">

@@ -22,9 +22,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Navigation />
-
-        <hr />
+        {/* <Navigation /> */}
 
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
