@@ -2,12 +2,12 @@ import React from 'react';
 import MenuAppBar from '../MenuBar'
 import { AuthUserContext, withAuthorization } from '../Session';
 
-const MapPage = () => (
+const RidesPage = () => (
     <AuthUserContext.Consumer>
       {authUser => (
         <div>
           <MenuAppBar />
-          <h1>Map Page</h1>
+          <h1>Rides Page</h1>
         </div>
       )}
     </AuthUserContext.Consumer>
@@ -15,4 +15,4 @@ const MapPage = () => (
   
   const condition = authUser => !!authUser;
   
-  export default withAuthorization(condition)(MapPage);
+  export default withAuthorization(condition)(RidesPage);
