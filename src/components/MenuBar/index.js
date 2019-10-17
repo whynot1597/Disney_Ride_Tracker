@@ -14,9 +14,11 @@ import Menu from '@material-ui/core/Menu';
 
 import Drawer from '../Drawer';
 import SignOutButton from '../SignOut';
-import { AuthUserContext } from '../Session';
+import { AuthUserContext, withAuthorization } from '../Session';
 
 import * as ROUTES from '../../constants/routes';
+
+const checkCondition = authUser => !!authUser;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -80,7 +82,7 @@ export default function MenuAppBar() {
                             >
                                 <MenuItem component={Link} to={ROUTES.HOME}>Profile</MenuItem>
                                 <MenuItem component={Link} to={ROUTES.ACCOUNT}>Account</MenuItem>
-                                <MenuItem disabled='false' onClick={handleClose}><SignOutButton /></MenuItem>
+                                <MenuItem disabled={!checkCondition()} onClick={handleClose}><SignOutButton /></MenuItem>
                             </Menu>
                         </div>
                     )}
