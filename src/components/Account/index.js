@@ -3,14 +3,11 @@ import React from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 import { PasswordForgetForm } from '../PasswordForget';
 import PasswordChangeForm from '../PasswordChange';
-import MenuAppBar from '../MenuBar';
-
 
 const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
-        <MenuAppBar />
         <h1>Account Page</h1>
         <PasswordForgetForm />
         <PasswordChangeForm />

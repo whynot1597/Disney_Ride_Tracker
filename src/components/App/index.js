@@ -18,6 +18,7 @@ import { apiHost } from '../api'
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
+import MenuAppBar from '../MenuBar';
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
     <Router>
       <div>
         {/* <Navigation /> */}
+        <MenuAppBar />
 
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
