@@ -1,4 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
+
+import './MenuBar.css'
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,7 +11,11 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+
 import Drawer from '../Drawer';
+import SignOutButton from '../SignOut';
+
+import * as ROUTES from '../../constants/routes';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,6 +42,10 @@ export default function MenuAppBar() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogOut = ({ firebase }) => (
+        firebase.doSignOut
+    )
 
     return (
         <div className={classes.root}>
@@ -69,8 +81,9 @@ export default function MenuAppBar() {
                                 open={open}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                <MenuItem component={Link} to={ROUTES.ACCOUNT}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                                <SignOutButton />
                             </Menu>
                         </div>
                     )}

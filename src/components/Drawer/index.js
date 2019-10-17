@@ -1,5 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -12,6 +13,8 @@ import WeatherIcon from '@material-ui/icons/WbSunny';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import * as ROUTES from '../../constants/routes';
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -20,11 +23,6 @@ const useStyles = makeStyles({
     width: 'auto',
   },
 });
-
-const handleRedirect = (route) => {
-    return <Redirect to='/target' />
-}
-
 
 export default function TemporaryDrawer() {
   const classes = useStyles();
@@ -44,16 +42,22 @@ export default function TemporaryDrawer() {
     <div
       className={classes.list}
       role="presentation"
-      onClick={handleRedirect('test')}
+      onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {['Map', 'Rides', 'Weather'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index === 0 ? <MapIcon /> : index === 1 ? <RidesIcon /> : <WeatherIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button component={Link} to={ROUTES.MAP} key='Map'>
+          <ListItemIcon> <MapIcon /> </ListItemIcon>
+          <ListItemText primary='Map' />
+        </ListItem>
+        <ListItem button component={Link} to={ROUTES.RIDES} key='Rides'>
+          <ListItemIcon> <RidesIcon /> </ListItemIcon>
+          <ListItemText primary='Rides' />
+        </ListItem>
+        <ListItem button component={Link} to={ROUTES.WEATHER} key='Weather'>
+          <ListItemIcon> <WeatherIcon /> </ListItemIcon>
+          <ListItemText primary='Weather' />
+        </ListItem>
       </List>
     </div>
   );
