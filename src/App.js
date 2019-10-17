@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-
-import AppHeader from './AppHeader'
 import SearchForm from './SearchForm'
-
 import { apiHost } from './api'
 import MenuAppBar from './MenuBar'
 
@@ -20,7 +17,6 @@ const App = () => {
   return (
     <div className="App">
       <MenuAppBar />
-      <AppHeader />
       <SearchForm />
     </div>
   )
