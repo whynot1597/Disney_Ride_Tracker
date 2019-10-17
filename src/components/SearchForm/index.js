@@ -5,7 +5,7 @@ import './SearchForm.css'
 
 import SearchResults from '../SearchResults/SearchResults'
 
-import { searchGifs } from '../../api'
+import { searchGifs } from '../api'
 
 import Button from '@material-ui/core/Button'
 import SearchIcon from '@material-ui/icons/Search'
