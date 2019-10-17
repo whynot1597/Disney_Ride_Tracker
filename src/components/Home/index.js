@@ -2,10 +2,13 @@ import React from 'react';
 
 import { withAuthorization } from '../Session';
 
+import SearchForm from '../SearchForm'
+import MenuAppBar from '../MenuBar'
+
 const HomePage = () => (
   <div>
-    <h1>Home Page</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
+    <MenuAppBar />
+    <SearchForm />
   </div>
 );
 
