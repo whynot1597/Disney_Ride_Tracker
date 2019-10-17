@@ -1,11 +1,14 @@
 import React from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 
+import RidesList from '../RidesList'
+
 const RidesPage = () => (
     <AuthUserContext.Consumer>
       {authUser => (
         <div>
           <h1>Rides Page</h1>
+          <RidesList />
         </div>
       )}
     </AuthUserContext.Consumer>
