@@ -81,7 +81,8 @@ export default function MenuAppBar() {
                                 open={open}
                                 onClose={handleClose}
                             >
-                                <MenuItem component={Link} to={ROUTES.ACCOUNT}>Profile</MenuItem>
+                                <MenuItem component={Link} to={ROUTES.HOME}>Profile</MenuItem>
+                                <MenuItem component={Link} to={ROUTES.ACCOUNT}>Account</MenuItem>
                                 <MenuItem onClick={handleClose}>Log Out</MenuItem>
                                 <SignOutButton />
                             </Menu>
