@@ -14,6 +14,7 @@ import Menu from '@material-ui/core/Menu';
 
 import Drawer from '../Drawer';
 import SignOutButton from '../SignOut';
+import { AuthUserContext } from '../Session';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -42,10 +43,6 @@ export default function MenuAppBar() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const handleLogOut = ({ firebase }) => (
-        firebase.doSignOut
-    )
 
     return (
         <div className={classes.root}>
@@ -83,8 +80,7 @@ export default function MenuAppBar() {
                             >
                                 <MenuItem component={Link} to={ROUTES.HOME}>Profile</MenuItem>
                                 <MenuItem component={Link} to={ROUTES.ACCOUNT}>Account</MenuItem>
-                                <MenuItem onClick={handleClose}>Log Out</MenuItem>
-                                <SignOutButton />
+                                <MenuItem disabled='false' onClick={handleClose}><SignOutButton /></MenuItem>
                             </Menu>
                         </div>
                     )}
