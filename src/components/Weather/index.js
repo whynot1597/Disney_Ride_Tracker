@@ -1,7 +1,11 @@
 import React from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 
-import SearchWeather from '../WeatherAPI'
+import WeatherData from '../WeatherAPI'
+
+const response = WeatherData.searchWeather()
+const TemperatureData = response.then((value) => value.data.Temperature)
+console.log(TemperatureData)
 
 const WeatherPage = () => (
     <AuthUserContext.Consumer>

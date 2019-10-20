@@ -1,7 +1,7 @@
 const apiHost = () => { } // No-op in our mock version.
 
 const searchWeather = () => Promise.resolve({
-  data: [
+  data:
     {
         "LocalObservationDateTime": "2019-09-20T21:22:00-07:00",
         "EpochTime": 1569039720,
@@ -377,7 +377,6 @@ const searchWeather = () => Promise.resolve({
         "MobileLink": "http://m.accuweather.com/en/us/red-dog-ca/95945/current-weather/2143156?lang=en-us",
         "Link": "http://www.accuweather.com/en/us/red-dog-ca/95945/current-weather/2143156?lang=en-us"
     }
-]
 })
 
 export default {
