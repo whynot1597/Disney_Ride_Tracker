@@ -82,7 +82,7 @@ export default function MenuAppBar() {
                             >
                                 <MenuItem component={Link} to={ROUTES.HOME}>Profile</MenuItem>
                                 <MenuItem component={Link} to={ROUTES.ACCOUNT}>Account</MenuItem>
-                                <MenuItem disabled={!checkCondition()} onClick={handleClose}><SignOutButton /></MenuItem>
+                                <MenuItem onClick={handleClose}><SignOutButton /></MenuItem>
                             </Menu>
                         </div>
                     )}
