@@ -14,7 +14,7 @@ const WeatherGraphic = props => {
         currentTemp: '--',
         currentText: '--'
     });
-    const handleUpdate = () => {
+    const handleUpdate = name => event => {
         setState({ 
             ...state, 
             [name]: event.target.checked, 
