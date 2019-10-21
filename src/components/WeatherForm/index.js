@@ -3,32 +3,33 @@ import React, { useState } from 'react'
 //import SearchResults from './SearchResults'
 
 import { searchWeather } from '../WeatherAPI'
+import WeatherGraphic from '../WeatherGraphic'
 
 const WeatherForm = () => {
     const [error, setError] = useState(null)
     const [query, setQuery] = useState('')
-    const [images, setImages] = useState([])
+    const [currentWeather, setCurrentWeather] = useState({})
 
     const handleQueryChange = event => setQuery(event.target.value)
 
     const performQuery = async event => {
-        console.log("TRYING")
         event.preventDefault()
 
         setError(null)
 
         try {
             const result = await searchWeather()
-
-            setImages(result.data)
+            setCurrentWeather(result)
+            //console.log(temperature)
         } catch (error) {
-            console.log(error)
             setError('Sorry, but something went wrong.')
         }
     }
 
     return (
-        <div><button onClick={performQuery}>Test</button></div>
+        <div onLoad={performQuery, performQuery}>
+            <WeatherGraphic results={currentWeather}/>
+        </div>
     )
 }
 
