@@ -12,7 +12,7 @@ const WeatherForm = () => {
 
     const handleQueryChange = event => setQuery(event.target.value)
 
-    const performQuery = async event => {
+    const handleUpdate = async event => {
         event.preventDefault()
 
         setError(null)
@@ -27,8 +27,9 @@ const WeatherForm = () => {
     }
 
     return (
-        <div onLoad={performQuery, performQuery}>
+        <div onLoad={handleUpdate}>
             <WeatherGraphic results={currentWeather}/>
+            <button onClick={handleUpdate}>Refresh</button>
         </div>
     )
 }
