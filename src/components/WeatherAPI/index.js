@@ -381,6 +381,6 @@ const searchWeather = () => Promise.resolve({
 
 export default {
   apiHost,
-  searchWeather,
+  searchWeather
 }
  

@@ -28,7 +28,7 @@ const SearchForm = () => {
         rating: 'pg-13',
         q: query
       })
-
+      
       setImages(result.data)
     } catch (error) {
       setError('Sorry, but something went wrong.')
