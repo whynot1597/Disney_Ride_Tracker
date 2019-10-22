@@ -76,7 +76,6 @@ class SignInFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
   onSubmit = event => {
-    event.preventDefault()
     const { email, password } = this.state;
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
@@ -209,6 +208,12 @@ class SignInGoogleBase extends Component {
   }
 }
 
+const SignInLink = () => (
+  <p>
+    Already have an account? <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+  </p>
+);
+
 const SignInForm = compose(
   withRouter,
   withFirebase,
@@ -220,4 +225,5 @@ const SignInGoogle = compose(
 )(SignInGoogleBase);
 
 export default SignInPage;
-export { SignInForm, SignInGoogle };
+
+export { SignInForm, SignInGoogle, SignInLink };

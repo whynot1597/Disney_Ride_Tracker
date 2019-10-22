@@ -18,6 +18,8 @@ import Container from '@material-ui/core/Container';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { SignInLink } from '../SignIn';
+import { Snackbar } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -59,7 +61,6 @@ function Copyright() {
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
     <SignUpForm />
   </div>
 )
@@ -209,6 +210,7 @@ class SignUpFormBase extends Component {
                   autoComplete="current-password"
                   value={passwordTwo}
                   onChange={this.onChange}
+                  error={passwordOne !== passwordTwo}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -228,12 +230,10 @@ class SignUpFormBase extends Component {
             >
               Sign Up
           </Button>
-          {error && <p>{error.message}</p>}
+          {error && <Snackbar variant='error' message={error.message} open='true'></Snackbar>}
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-              </Link>
+                <SignInLink />
               </Grid>
             </Grid>
           </form>
