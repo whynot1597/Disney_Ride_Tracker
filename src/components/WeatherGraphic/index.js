@@ -7,26 +7,30 @@ import iconArray from '../WeatherIcons'
 const WeatherGraphic = props => {
     const { results } = props
 
+    let isMetric = true
+
     const [state, setState] = React.useState({
-        isMetric: true,
-        symbol: 'C',
+        tempSymbol: 'C',
         system: 'Metric',
         currentTemp: '--',
         currentText: '--',
-        currentIcon: '',
+        currentIcon: undefined,
         feelTemp: '--',
+        currentSpeed: '--',
+        windSymbol: 'km/h',
     });
     const handleChange = name => event => {
         try {
+            isMetric = event.target.checked
             setState({ 
                 ...state, 
-                [name]: event.target.checked, 
-                symbol: event.target.checked ? 'C' : 'F',
-                system: event.target.checked ? 'Metric' : 'Imperial',
-                currentTemp: event.target.checked ? results.Temperature.Metric.Value : results.Temperature.Imperial.Value, 
-                feelTemp: event.target.checked ? results.RealFeelTemperature.Metric.Value : results.RealFeelTemperature.Imperial.Value,
+                tempSymbol: isMetric ? 'C' : 'F',
+                currentTemp: isMetric ? results.Temperature.Metric.Value : results.Temperature.Imperial.Value, 
+                feelTemp: isMetric ? results.RealFeelTemperature.Metric.Value : results.RealFeelTemperature.Imperial.Value,
                 currentText: results.WeatherText,
                 currentIcon: results.WeatherIcon - 1,
+                windSymbol: isMetric ? 'km/h' : 'mph',
+                currentSpeed: isMetric ? results.Wind.Speed.Metric.Value : results.Wind.Speed.Imperial.Value,
             })
         } catch(error) {
             alert('Please Refresh')
@@ -37,31 +41,34 @@ const WeatherGraphic = props => {
             <Typography component="div">
                 <Grid direction='row' spacing={0}>
                     <Grid container>
-                        <Grid item xs={2}>Current Weather</Grid>
-                        <Grid item xs={4}>{state.currentTemp} °{state.symbol}</Grid>
+                        <Grid item xs={2}>Current Weather:</Grid>
+                        <Grid item xs={4}>{state.currentTemp} °{state.tempSymbol}</Grid>
                         <Grid item xs={2}>{state.currentText}</Grid>
-                        <Grid item xs={2}><img src={iconArray[state.WeatherIcon]}></img></Grid>
+                        <Grid item xs={2}><img src={iconArray[state.currentIcon]}></img></Grid>
                     </Grid>
                     <Grid container>
-                        <Grid item>Real Feel</Grid>
-                        <Grid item>{state.feelTemp} °{state.symbol}</Grid>
+                        <Grid item>Real Feel:</Grid>
+                        <Grid item xs={1}>{state.feelTemp} °{state.tempSymbol}</Grid>
+                        <Grid item>Precipitation:</Grid>
+                        <Grid item xs={1}></Grid>
+                        <Grid item>Wind:</Grid>
+                        <Grid item>{state.currentSpeed} {state.windSymbol}</Grid>
                     </Grid>
                     <Grid container>
-                        <Grid item>Precipitation</Grid>
-                        <Grid item></Grid>
+                        
                     </Grid>
                     <Grid item>
                         <Grid component="label" container alignItems="right" spacing={0}>
-                            <Grid item>F</Grid>
+                            <Grid item>Imperial (F, mph)</Grid>
                             <Grid item>
                                 <Switch
                                     checked={state.isMetric}
-                                    onChange={handleChange('isMetric')}
+                                    onChange={handleChange()}
                                     value="isMetric"
                                     inputProps={{ 'aria-label': 'checkbox with default color' }}
                                 />
                             </Grid>
-                            <Grid item>C</Grid>
+                            <Grid item>Metric (C, km/h)</Grid>
                         </Grid>
                     </Grid>
                 </Grid>
