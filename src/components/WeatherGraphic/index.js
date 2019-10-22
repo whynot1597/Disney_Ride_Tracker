@@ -37,7 +37,7 @@ const WeatherGraphic = props => {
                         <Grid item xs={2}>Current Weather</Grid>
                         <Grid item xs={4}>{state.currentTemp} °{state.symbol}</Grid>
                         <Grid item xs={2}>{state.currentText}</Grid>
-                        <Grid item xs={2}><img src={iconArray[7]}></img></Grid>
+                        <Grid item xs={2}><img src={iconArray[state.WeatherIcon]}></img></Grid>
                     </Grid>
                     <Grid item>
                         <Grid component="label" container alignItems="right" spacing={0}>
