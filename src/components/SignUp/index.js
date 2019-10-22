@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { SignInLink } from '../SignIn';
-import { Snackbar } from '@material-ui/core';
+import { Snackbar, SnackbarContent } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -230,7 +230,16 @@ class SignUpFormBase extends Component {
             >
               Sign Up
           </Button>
-          {error && <Snackbar variant='error' message={error.message} open='true'></Snackbar>}
+          <Snackbar 
+            open={error}
+            message={error ? error.message : null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            autoHideDuration={6000} 
+           />
+          {error && error.message}
             <Grid container justify="flex-end">
               <Grid item>
                 <SignInLink />
