@@ -3,7 +3,6 @@ import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import iconArray from '../WeatherIcons'
-import { loadOptions } from '@babel/core';
 
 const WeatherGraphic = props => {
     const { results } = props
@@ -45,7 +44,7 @@ const WeatherGraphic = props => {
                         <Grid item xs={2}>Current Weather:</Grid>
                         <Grid item xs={4}>{state.currentTemp} °{state.tempSymbol}</Grid>
                         <Grid item xs={2}>{state.currentText}</Grid>
-                        <Grid item xs={2}><img src={iconArray[state.currentIcon]}></img></Grid>
+                        <Grid item xs={2}><img src={iconArray[state.currentIcon]} alt='Weather Icon'></img></Grid>
                     </Grid>
                     <Grid container>
                         <Grid item>Real Feel:</Grid>

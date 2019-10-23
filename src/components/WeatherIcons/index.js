@@ -70,7 +70,7 @@ const iconArray = [
     icon21,
     icon22,
     icon23,
-    icon34,
+    icon24,
     icon25,
     icon26,
     icon27,

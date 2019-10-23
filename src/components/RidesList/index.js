@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
-import Firebase from '../Firebase'
+import { withFirebase } from '../Firebase'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -20,21 +22,21 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, like, dislike, ride) {
-  return { name, like, dislike, ride };
+function createData(name, like, dislike, didRide) {
+  return { name, like, dislike, didRide };
 }
 
-function logRide(ride) {
-  const database = Firebase.db
-  console.log(database)
-  console.log(ride)
+const logRide = event => {
+  //const database = .db
+  //console.log(database)
+  console.log(event)
   return
 }
 
 const DisneyRides = [
-  createData('Space Mountain', 'Like', 'Dislike', 'Ride'),
-  createData('Indiana Jones', 'Like', 'Dislike', 'Ride'),
-  createData('Matterhorn', 'Like', 'Dislike', 'Ride'),
+  createData('Space Mountain', 'Like', 'Dislike', 'Did Ride'),
+  createData('Indiana Jones', 'Like', 'Dislike', 'Did Ride'),
+  createData('Matterhorn', 'Like', 'Dislike', 'Did Ride'),
 ];
 
 export default function RidesList() {
