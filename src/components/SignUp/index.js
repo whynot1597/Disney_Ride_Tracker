@@ -239,7 +239,6 @@ class SignUpFormBase extends Component {
             }}
             autoHideDuration={6000} 
            />
-          {error && error.message}
             <Grid container justify="flex-end">
               <Grid item>
                 <SignInLink />

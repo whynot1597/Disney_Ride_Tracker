@@ -160,7 +160,6 @@ class SignInFormBase extends Component {
             }}
             autoHideDuration={6000} 
            />
-          {error && <p>{error.message}</p>}
             <Grid container>
               <Grid item xs>
                 <PasswordForgetLink />

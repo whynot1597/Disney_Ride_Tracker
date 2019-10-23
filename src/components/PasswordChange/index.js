@@ -106,7 +106,6 @@ class PasswordChangeForm extends Component {
               }}
               autoHideDuration={6000}
             />
-            {error && <p>{error.message}</p>}
           </form>
         </div>
       </Container>

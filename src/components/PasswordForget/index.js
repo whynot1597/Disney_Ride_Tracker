@@ -104,7 +104,6 @@ class PasswordForgetFormBase extends Component {
               }}
               autoHideDuration={6000}
             />
-            {error && <p>{error.message}</p>}
             <Grid container>
               <Grid item>
                 <SignInLink />
