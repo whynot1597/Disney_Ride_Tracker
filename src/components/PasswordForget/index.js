@@ -95,16 +95,16 @@ class PasswordForgetFormBase extends Component {
             >
               Reset Password
           </Button>
-          <Snackbar 
-            open={error}
-            message={error ? error.message : null}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            autoHideDuration={6000} 
-           />
-          {error && <p>{error.message}</p>}
+            <Snackbar
+              open={error}
+              message={error ? error.message : null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              autoHideDuration={6000}
+            />
+            {error && <p>{error.message}</p>}
             <Grid container>
               <Grid item>
                 <SignInLink />
