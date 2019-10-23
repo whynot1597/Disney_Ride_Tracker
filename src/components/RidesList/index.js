@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Firebase from '../Firebase'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -23,6 +25,9 @@ function createData(name, like, dislike, ride) {
 }
 
 function logRide(ride) {
+  const database = Firebase.db
+  console.log(database)
+  console.log(ride)
   return
 }
 
@@ -43,7 +48,7 @@ export default function RidesList() {
             <TableCell>Disneyland</TableCell>
             <TableCell align="right">Like</TableCell>
             <TableCell align="right">Dislike&nbsp;</TableCell>
-            <TableCell align="right">Ride&nbsp;</TableCell>
+            <TableCell align="right">Did Ride&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -54,7 +59,7 @@ export default function RidesList() {
               </TableCell>
               <TableCell align="right">{ride.like}</TableCell>
               <TableCell align="right">{ride.dislike}</TableCell>
-              <TableCell align="right">{ride.ride}</TableCell>
+              <TableCell align="right">{ride.didRide}</TableCell>
             </TableRow>
           ))}
         </TableBody>
