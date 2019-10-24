@@ -7,7 +7,10 @@ import WeatherGraphic from '../WeatherGraphic'
 
 const WeatherForm = () => {
     const [error, setError] = useState(null)
+    const [query, setQuery] = useState('')
     const [currentWeather, setCurrentWeather] = useState({})
+
+    const handleQueryChange = event => setQuery(event.target.value)
 
     const handleUpdate = async event => {
         event.preventDefault()
@@ -17,6 +20,7 @@ const WeatherForm = () => {
         try {
             const result = await searchWeather()
             setCurrentWeather(result)
+            //console.log(temperature)
         } catch (error) {
             setError('Sorry, but something went wrong.')
         }

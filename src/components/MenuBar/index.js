@@ -14,10 +14,12 @@ import Menu from '@material-ui/core/Menu';
 
 import Drawer from '../Drawer';
 import SignOutButton from '../SignOut';
+import { AuthUserContext, withAuthorization } from '../Session';
 
 import * as ROUTES from '../../constants/routes';
 
 //TODO: Implement into SignOut button
+const checkCondition = authUser => !!authUser;
 
 const useStyles = makeStyles(theme => ({
     root: {

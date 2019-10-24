@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,14 +26,16 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
   const classes = useStyles();
-  const [isOpen, setOpen] = useState(false);
+  const [state, setState] = React.useState({
+    left: false,
+  });
 
   const toggleDrawer = (open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
 
-    setOpen(open);
+    setState({ ...state, ['left']: open });
   };
 
   const sideList = () => (
@@ -71,7 +73,7 @@ export default function TemporaryDrawer() {
           >
               <MenuIcon />
           </IconButton>
-      <Drawer open={isOpen} onClose={toggleDrawer(false)}>
+      <Drawer open={state.left} onClose={toggleDrawer(false)}>
         {sideList()}
       </Drawer>
     </div>
