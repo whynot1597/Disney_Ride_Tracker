@@ -47,9 +47,8 @@ function Copyright() {
 
 function SignInForm(props) {
   const [state, setState] = useState({ ...INITIAL_STATE })
-  const [isInvalid, setIsInvalid] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(true)
   const onSubmit = event => {
-    //const { email, password } = state;
     props.firebase
       .doSignInWithEmailAndPassword(state.email, state.password)
       .then(() => {
@@ -63,7 +62,7 @@ function SignInForm(props) {
   };
   const handleChange = event => {
     setState({ [event.target.name]: event.target.value });
-    setIsInvalid(state.password === '' || state.email === '')
+    setIsInvalid(state.password === undefined || state.email === undefined)
   }
 
   const useStyles = makeStyles(theme => ({
