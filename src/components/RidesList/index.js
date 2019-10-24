@@ -25,7 +25,6 @@ function createData(name, like, dislike, didRide) {
 }
 
 const logRide = ride => event => {
-  event.preventDefault()
   //const database = .db
   //console.log(database)
   // console.log(event)
