@@ -3,7 +3,6 @@ import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import iconArray from '../WeatherIcons'
-import { loadOptions } from '@babel/core';
 
 const WeatherGraphic = props => {
     const { results } = props
@@ -20,7 +19,7 @@ const WeatherGraphic = props => {
         currentSpeed: '--',
         windSymbol: 'km/h',
     });
-    const onChange = name => async event => {
+    const handleChange = name => event => {
         try {
             isMetric = event.target.checked
             setState({ 
@@ -64,7 +63,7 @@ const WeatherGraphic = props => {
                             <Grid item>
                                 <Switch
                                     checked={state.isMetric}
-                                    onChange={onChange()}
+                                    onChange={handleChange()}
                                     value="isMetric"
                                     inputProps={{ 'aria-label': 'checkbox with default color' }}
                                 />
@@ -74,7 +73,6 @@ const WeatherGraphic = props => {
                     </Grid>
                 </Grid>
             </Typography>
-            <button onClick={onChange()}>Load</button>
             <hr />
         </div>
     )
