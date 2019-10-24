@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { SignInLink } from '../SignIn';
-import { Snackbar, SnackbarContent } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -50,9 +50,9 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <LinkUI color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </LinkUI>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -76,21 +76,15 @@ const INITIAL_STATE = {
 
 function SignUpFormBase(props) {
   const [state, setState] = useState(...INITIAL_STATE)
-
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [passwordOne, setPasswordOne] = useState('')
-  const [passwordTwo, setPasswordTwo] = useState('')
-  const [error, setError] = useState(null)
   const [isInvalid, setIsInvalid] = useState(true)
 
   const onSubmit = event => {
+    const { firstName, lastName, email, passwordOne } = state
     props.firebase
-      .doCreateUserWithEmailAndPassword(state.email, state.passwordOne)
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         // Create a user in your Firebase realtime database
-        const logs = {'created': true}
+        const logs = { 'created': true }
         return props.firebase
           .user(authUser.user.uid)
           .set({
@@ -104,21 +98,21 @@ function SignUpFormBase(props) {
         props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        setError(error);
+        setState({ ...state, 'error': error });
       });
 
     event.preventDefault();
   }
 
   const handleChange = event => {
-    setIsInvalid(passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      firstName === '' ||
-      lastName === ''
+    setIsInvalid(state.passwordOne !== state.passwordTwo ||
+      state.passwordOne === '' ||
+      state.email === '' ||
+      state.firstName === '' ||
+      state.lastName === ''
     )
 
-    setState({...state, [event.target.name]: event.target.value})
+    setState({ ...state, [event.target.name]: event.target.value })
   };
 
   const classes = useStyles()
@@ -131,7 +125,7 @@ function SignUpFormBase(props) {
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
-      </Typography>
+        </Typography>
         <form className={classes.form} onSubmit={onSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -143,8 +137,8 @@ function SignUpFormBase(props) {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                value={firstName}
-                onChange={handleChange}
+                value={state.firstName}
+                onChange={state.handleChange}
                 type="text"
                 autoFocus
               />
@@ -158,7 +152,7 @@ function SignUpFormBase(props) {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                value={lastName}
+                value={state.lastName}
                 onChange={handleChange}
                 type="text"
               />
@@ -172,7 +166,7 @@ function SignUpFormBase(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
+                value={state.email}
                 onChange={handleChange}
                 type="text"
               />
@@ -187,7 +181,7 @@ function SignUpFormBase(props) {
                 type="password"
                 id="passwordOne"
                 autoComplete="current-password"
-                value={passwordOne}
+                value={state.passwordOne}
                 onChange={handleChange}
               />
             </Grid>
@@ -201,9 +195,9 @@ function SignUpFormBase(props) {
                 type="password"
                 id="passwordTwo"
                 autoComplete="current-password"
-                value={passwordTwo}
+                value={state.passwordTwo}
                 onChange={handleChange}
-                error={passwordOne !== passwordTwo}
+                error={state.passwordOne !== state.passwordTwo}
               />
             </Grid>
             <Grid item xs={12}>
@@ -222,15 +216,15 @@ function SignUpFormBase(props) {
             disabled={isInvalid}
           >
             Sign Up
-        </Button>
-        <Snackbar 
-          open={error}
-          message={error ? error.message : null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          autoHideDuration={6000} 
+          </Button>
+          <Snackbar
+            open={state.error}
+            message={state.error ? state.error.message : null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            autoHideDuration={6000}
           />
           <Grid container justify="flex-end">
             <Grid item>

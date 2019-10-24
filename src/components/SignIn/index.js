@@ -47,28 +47,24 @@ function Copyright() {
 }
 
 function SignInFormBase(props) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [state, setState] = useState({ ...INITIAL_STATE })
   const [isInvalid, setIsInvalid] = useState(true)
+
   const onSubmit = event => {
     props.firebase
-      .doSignInWithEmailAndPassword(email, password)
+      .doSignInWithEmailAndPassword(state.email, state.password)
       .then(() => {
+        setState({ ...INITIAL_STATE })
         props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        setError(error);
+        setState({...state, 'error': error});
       });
     event.preventDefault();
   };
-  const handleEmailChange = event => {
-    setEmail(event.target.value) // TODO: Combine changes
-    setIsInvalid(password === '' || email === '')
-  }
-  const handlePasswordChange = event => {
-    setPassword(event.target.value); // TODO: Change changes
-    setIsInvalid(password === '' || email === '')
+  const handleChange = event => {
+    setState({...state, [event.target.name]: event.target.value}) // TODO: Combine changes
+    setIsInvalid(state.password === '' || state.email === '')
   }
 
   const useStyles = makeStyles(theme => ({
@@ -119,8 +115,8 @@ function SignInFormBase(props) {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={handleEmailChange}
+              value={state.email}
+              onChange={handleChange}
               type='text'
             />
             <TextField
@@ -133,8 +129,8 @@ function SignInFormBase(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={handlePasswordChange}
+              value={state.password}
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -151,8 +147,8 @@ function SignInFormBase(props) {
               Sign In
           </Button>
           <Snackbar 
-            open={error}
-            message={error ? error.message : null}
+            open={state.error}
+            message={state.error ? state.error.message : null}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'left',
