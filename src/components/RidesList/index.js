@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+import { withFirebase } from '../Firebase'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -24,11 +26,10 @@ function createData(name, like, dislike, didRide) {
   return { name, like, dislike, didRide };
 }
 
-const logRide = ride => event => {
+const logRide = event => {
   //const database = .db
   //console.log(database)
-  // console.log(event)
-  console.log(ride)
+  console.log(event)
   return
 }
 
