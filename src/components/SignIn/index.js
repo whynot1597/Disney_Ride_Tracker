@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
@@ -23,7 +23,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <SignInForm />
+    <SignInFormBase />
   </div>
 );
 const INITIAL_STATE = {
@@ -36,7 +36,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link href="https://material-ui.com/">
+      <Link to='' href="https://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -45,59 +45,53 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  onSubmit = event => {
-    const { email, password } = this.state;
-    this.props.firebase
-      .doSignInWithEmailAndPassword(email, password)
+function SignInForm(props) {
+  const [state, setState] = useState({ ...INITIAL_STATE })
+  const [isInvalid, setIsInvalid] = useState(false)
+  const onSubmit = event => {
+    //const { email, password } = state;
+    props.firebase
+      .doSignInWithEmailAndPassword(state.email, state.password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        setState({ ...INITIAL_STATE });
+        props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        setState({ error });
       });
     event.preventDefault();
   };
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  const handleChange = event => {
+    setState({ [event.target.name]: event.target.value });
+    setIsInvalid(state.password === '' || state.email === '')
   }
 
-  render() {
-    const { email, password, error } = this.state;
-    const isInvalid = password === '' || email === '';
-
-    const classes = {};
-
+  const useStyles = makeStyles(theme => ({
+    '@global': {
+      body: {
+        backgroundColor: theme.palette.common.white,
+      },
+    },
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  const classes = useStyles();
+  
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -108,8 +102,8 @@ class SignInFormBase extends Component {
           <Typography component="h1" variant="h5">
             Sign in
         </Typography>
-          <form className={classes.form} onSubmit={this.onSubmit} noValidate>
-            <SignInGoogle />
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
+            <SignInGoogleBase />
             <TextField
               variant="outlined"
               margin="normal"
@@ -120,8 +114,8 @@ class SignInFormBase extends Component {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={this.onChange}
+              value={state.email}
+              onChange={handleChange}
               type='text'
             />
             <TextField
@@ -134,8 +128,8 @@ class SignInFormBase extends Component {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={this.onChange}
+              value={state.password}
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -152,8 +146,8 @@ class SignInFormBase extends Component {
               Sign In
           </Button>
           <Snackbar 
-            open={error}
-            message={error ? error.message : null}
+            open={state.error}
+            message={state.error ? state.error.message : null}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'left',
@@ -175,20 +169,16 @@ class SignInFormBase extends Component {
         </Box>
       </Container>
     );
-  }
 }
 
-class SignInGoogleBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null };
-  }
-  onSubmit = event => {
-    this.props.firebase
+function SignInGoogle(props) {
+  const [error, setError] = useState(null)
+  const onSubmit = event => {
+    props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
         // Create a user in your Firebase Realtime Database too
-        return this.props.firebase
+        return props.firebase
           .user(socialAuthUser.user.uid)
           .set({
             username: socialAuthUser.user.displayName,
@@ -197,23 +187,20 @@ class SignInGoogleBase extends Component {
           });
       })
       .then(socialAuthUser => {
-        this.setState({ error: null });
-        this.props.history.push(ROUTES.HOME);
+        setError(null);
+        props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        setError(error);
       });
     event.preventDefault();
   };
-  render() {
-    const { error } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={onSubmit}>
         <button type="submit">Sign In with Google</button>
         {error && <p>{error.message}</p>}
       </form>
     );
-  }
 }
 
 const SignInLink = () => (
@@ -222,16 +209,16 @@ const SignInLink = () => (
   </p>
 );
 
-const SignInForm = compose(
+const SignInFormBase = compose(
   withRouter,
   withFirebase,
-)(SignInFormBase);
+)(SignInForm);
 
-const SignInGoogle = compose(
+const SignInGoogleBase = compose(
   withRouter,
   withFirebase,
-)(SignInGoogleBase);
+)(SignInGoogle);
 
 export default SignInPage;
 
-export { SignInLink, SignInForm, SignInGoogle, }
+export { SignInLink, SignInFormBase, SignInGoogleBase, }
