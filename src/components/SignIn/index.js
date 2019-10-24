@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import LinkUI from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,7 +24,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <SignInFormBase />
+    <SignInForm />
   </div>
 );
 const INITIAL_STATE = {
@@ -36,33 +37,38 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link to='' href="https://material-ui.com/">
+      <LinkUI href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </LinkUI>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
 
-function SignInForm(props) {
-  const [state, setState] = useState({ ...INITIAL_STATE })
+function SignInFormBase(props) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
   const [isInvalid, setIsInvalid] = useState(true)
   const onSubmit = event => {
     props.firebase
-      .doSignInWithEmailAndPassword(state.email, state.password)
+      .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        setState({ ...INITIAL_STATE });
         props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        setState({ error });
+        setError(error);
       });
     event.preventDefault();
   };
-  const handleChange = event => {
-    setState({ [event.target.name]: event.target.value });
-    setIsInvalid(state.password === undefined || state.email === undefined)
+  const handleEmailChange = event => {
+    setEmail(event.target.value) // TODO: Combine changes
+    setIsInvalid(password === '' || email === '')
+  }
+  const handlePasswordChange = event => {
+    setPassword(event.target.value); // TODO: Change changes
+    setIsInvalid(password === '' || email === '')
   }
 
   const useStyles = makeStyles(theme => ({
@@ -79,7 +85,7 @@ function SignInForm(props) {
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -102,7 +108,7 @@ function SignInForm(props) {
             Sign in
         </Typography>
           <form className={classes.form} onSubmit={onSubmit} noValidate>
-            <SignInGoogleBase />
+            <SignInGoogle />
             <TextField
               variant="outlined"
               margin="normal"
@@ -113,8 +119,8 @@ function SignInForm(props) {
               name="email"
               autoComplete="email"
               autoFocus
-              value={state.email}
-              onChange={handleChange}
+              value={email}
+              onChange={handleEmailChange}
               type='text'
             />
             <TextField
@@ -127,8 +133,8 @@ function SignInForm(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={state.password}
-              onChange={handleChange}
+              value={password}
+              onChange={handlePasswordChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -145,8 +151,8 @@ function SignInForm(props) {
               Sign In
           </Button>
           <Snackbar 
-            open={state.error}
-            message={state.error ? state.error.message : null}
+            open={error}
+            message={error ? error.message : null}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'left',
@@ -170,7 +176,7 @@ function SignInForm(props) {
     );
 }
 
-function SignInGoogle(props) {
+function SignInGoogleBase(props) {
   const [error, setError] = useState(null)
   const onSubmit = event => {
     props.firebase
@@ -208,16 +214,16 @@ const SignInLink = () => (
   </p>
 );
 
-const SignInFormBase = compose(
+const SignInForm = compose(
   withRouter,
   withFirebase,
-)(SignInForm);
+)(SignInFormBase);
 
-const SignInGoogleBase = compose(
+const SignInGoogle = compose(
   withRouter,
   withFirebase,
-)(SignInGoogle);
+)(SignInGoogleBase);
 
 export default SignInPage;
 
-export { SignInLink, SignInFormBase, SignInGoogleBase, }
+export { SignInLink, SignInForm, SignInGoogle, }
