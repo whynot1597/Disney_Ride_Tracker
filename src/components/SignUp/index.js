@@ -61,9 +61,9 @@ function Copyright() {
 
 const SignUpPage = () => (
   <div>
-    <SignUpForm />
+    <SignUpFormBase />
   </div>
-)
+);
 
 const INITIAL_STATE = {
   firstName: '',
@@ -74,14 +74,14 @@ const INITIAL_STATE = {
   error: null,
 };
 
-function SignUpFormBase(props) {
-  const [state, setState] = useState(...INITIAL_STATE)
+const SignUpFormBase = props => {
+  const [state, setState] = useState({...INITIAL_STATE})
   const [isInvalid, setIsInvalid] = useState(true)
 
   const onSubmit = event => {
     const { firstName, lastName, email, passwordOne } = state
     props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .doCreateUserWithEmailAndPassword(state.email, state.passwordOne)
       .then(authUser => {
         // Create a user in your Firebase realtime database
         const logs = { 'created': true }
@@ -102,7 +102,7 @@ function SignUpFormBase(props) {
       });
 
     event.preventDefault();
-  }
+  };
 
   const handleChange = event => {
     setIsInvalid(state.passwordOne !== state.passwordTwo ||
@@ -138,7 +138,7 @@ function SignUpFormBase(props) {
                 id="firstName"
                 label="First Name"
                 value={state.firstName}
-                onChange={state.handleChange}
+                onChange={handleChange}
                 type="text"
                 autoFocus
               />
@@ -246,11 +246,11 @@ const SignUpLink = () => (
   </p>
 );
 
-const SignUpForm = compose(
+/* const SignUpForm = compose(
   withRouter,
   withFirebase,
 )(SignUpFormBase);
-
+ */
 export default SignUpPage;
 
-export { SignUpForm, SignUpLink };
+export { SignUpLink };
