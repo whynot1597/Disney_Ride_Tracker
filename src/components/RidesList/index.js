@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter, } from 'react-router-dom'
+import { compose } from 'recompose'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,6 +11,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { withFirebase } from '../Firebase'
+
+const today = new Date()
+const todayLog = String(today.getMonth() + 1).padStart(2, '0') + '-' +
+  String(today.getDate()).padStart(2, '0') + '-' +
+  today.getFullYear()
 
 const useStyles = makeStyles({
   root: {
@@ -34,8 +41,26 @@ const DisneyRides = [
   createData('Matterhorn', 'Like', 'Dislike', 'Ride'),
 ];
 
-export default function RidesList() {
+const RidesListBase = (props) => {
   const classes = useStyles();
+  const handleLogRide = (ride) => {
+    const log = {[todayLog]: 'test'}
+    console.log(props.firebase
+      .user('zA8c4hMveWVZy4fS2CatSVlczzI3')
+      .child('logs')
+      .set(log)
+    )
+    /* if (props.firebase.auth.user.child('logs').todayLog === undefined) {
+      props.firebase
+      .then(authUser => {
+        // Create a user in your Firebase realtime database
+        return props.firebase
+          .user(authUser.user.uid.logs)
+          .set({todayLog: {ride: {'like': false, 'time': '00:11'}}});
+      })
+    } */
+  }
+  console.log(props.firebase.auth.currentUser.email)
 
   return (
     <Paper className={classes.root}>
@@ -61,7 +86,9 @@ export default function RidesList() {
           ))}
         </TableBody>
       </Table>
-      <button onClick={logRide('Indi')}>Test</button>
+      <button onClick={handleLogRide('Indi')}>Test</button>
     </Paper>
   );
 }
+
+export default RidesListBase
