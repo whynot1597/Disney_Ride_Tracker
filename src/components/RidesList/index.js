@@ -31,10 +31,6 @@ function createData(name, like, dislike, ride) {
   return { name, like, dislike, ride };
 }
 
-function logRide(ride) {
-  return
-}
-
 const DisneyRides = [
   createData('Space Mountain', 'Like', 'Dislike', 'Ride'),
   createData('Indiana Jones', 'Like', 'Dislike', 'Ride'),
