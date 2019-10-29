@@ -40,11 +40,11 @@ const DisneyRides = [
 const RidesListBase = (props) => {
   const classes = useStyles();
   const handleLogRide = (ride) => {
-    const log = {[todayLog]: 'test'}
     console.log(props.firebase
       .user('zA8c4hMveWVZy4fS2CatSVlczzI3')
       .child('logs')
-      .set(log)
+      .child('10-26-2019')
+      //.set({[todayLog]: {[ride]: {'like': false, 'time': '00:11'}}})
     )
     /* if (props.firebase.auth.user.child('logs').todayLog === undefined) {
       props.firebase

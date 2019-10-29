@@ -1,9 +1,10 @@
 import React from 'react'
-import { getMap } from '../GoogleMapAPI'
+//import 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD-vLN72iPe7ug6xg7CrUvql5GZDDQNR_0'
+//import { initMap } from '../GoogleMapAPI'
 
 const GoogleMap = () => {
   return (
-      <h1>Google Map</h1>
+    <h2>map</h2>
   )
 }
 

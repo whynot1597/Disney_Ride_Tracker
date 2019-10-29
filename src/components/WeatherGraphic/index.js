@@ -1,8 +1,30 @@
 import React from 'react'
+
+import { makeStyles } from '@material-ui/core/styles';
+import { spacing } from '@material-ui/system';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+
 import iconArray from '../WeatherIcons'
+
+const useStyles = makeStyles(theme => ({
+    card: {
+        minWidth: 275,
+        backgroundColor: theme.palette.secondary.main,
+        spacing: 9,
+    },
+    title: {
+        fontSize: 14,
+        opacity: 1,
+    },
+    pos: {
+        marginBottom: 12,
+    },
+}));
 
 const WeatherGraphic = props => {
     const { results } = props
@@ -22,56 +44,86 @@ const WeatherGraphic = props => {
     const handleChange = name => event => {
         try {
             isMetric = event.target.checked
-            setState({ 
-                ...state, 
+            setState({
+                ...state,
                 tempSymbol: isMetric ? 'C' : 'F',
-                currentTemp: isMetric ? results.Temperature.Metric.Value : results.Temperature.Imperial.Value, 
+                currentTemp: isMetric ? results.Temperature.Metric.Value : results.Temperature.Imperial.Value,
                 feelTemp: isMetric ? results.RealFeelTemperature.Metric.Value : results.RealFeelTemperature.Imperial.Value,
                 currentText: results.WeatherText,
                 currentIcon: results.WeatherIcon - 1,
                 windSymbol: isMetric ? 'km/h' : 'mph',
                 currentSpeed: isMetric ? results.Wind.Speed.Metric.Value : results.Wind.Speed.Imperial.Value,
             })
-        } catch(error) {
+        } catch (error) {
             alert('Please Refresh')
         }
     }
+    const classes = useStyles();
+
     return (
         <div className="WeatherGraphic">
             <Typography component="div">
-                <Grid direction='row' spacing={0}>
-                    <Grid container>
-                        <Grid item xs={2}>Current Weather:</Grid>
-                        <Grid item xs={4}>{state.currentTemp} °{state.tempSymbol}</Grid>
-                        <Grid item xs={2}>{state.currentText}</Grid>
-                        <Grid item xs={2}><img src={iconArray[state.currentIcon]}></img></Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item>Real Feel:</Grid>
-                        <Grid item xs={1}>{state.feelTemp} °{state.tempSymbol}</Grid>
-                        <Grid item>Precipitation:</Grid>
-                        <Grid item xs={1}></Grid>
-                        <Grid item>Wind:</Grid>
-                        <Grid item>{state.currentSpeed} {state.windSymbol}</Grid>
-                    </Grid>
-                    <Grid container>
-                        
-                    </Grid>
+                <Grid container>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Current Weather
+                            </Typography>
+                        <Typography variant="h5" component="h2">
+                            {state.currentTemp} °{state.tempSymbol}
+                        </Typography>
+                        <Typography className={classes.pos} color="textSecondary">
+                            <img src={iconArray[state.currentIcon]} />
+                        </Typography>
+                        <Typography variant="body2" component="h3">
+                            {state.currentText}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+
+                    </CardActions>
+                </Card>
+
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Real Feel
+                            </Typography>
+                        <Typography variant="h5" component="h2">
+                            {state.feelTemp} °{state.tempSymbol}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+
+                    </CardActions>
+                </Card>
+
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Wind
+                            </Typography>
+                        <Typography variant="h5" component="h2">
+                            {state.currentSpeed} {state.windSymbol}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+
+                    </CardActions>
+                </Card>
+                <Grid component="label" container alignItems="right" spacing={0}>
+                    <Grid item>Imperial (F, mph)</Grid>
                     <Grid item>
-                        <Grid component="label" container alignItems="right" spacing={0}>
-                            <Grid item>Imperial (F, mph)</Grid>
-                            <Grid item>
-                                <Switch
-                                    checked={state.isMetric}
-                                    onChange={handleChange()}
-                                    value="isMetric"
-                                    inputProps={{ 'aria-label': 'checkbox with default color' }}
-                                />
-                            </Grid>
-                            <Grid item>Metric (C, km/h)</Grid>
-                        </Grid>
+                        <Switch
+                            checked={state.isMetric}
+                            onChange={handleChange()}
+                            value="isMetric"
+                            inputProps={{ 'aria-label': 'checkbox with default color' }}
+                        />
                     </Grid>
+                    <Grid item>Metric (C, km/h)</Grid>
                 </Grid>
+            </Grid>
             </Typography>
             <hr />
         </div>
