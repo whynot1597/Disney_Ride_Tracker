@@ -20,9 +20,6 @@ const useStyles = makeStyles(theme => ({
     title: {
         fontSize: 20,
     },
-    pos: {
-        marginBottom: 1,
-    },
 }));
 
 const WeatherGraphic = props => {
@@ -62,7 +59,7 @@ const WeatherGraphic = props => {
     return (
         <div className="WeatherGraphic">
             <Typography component="div" align='center'>
-                <Grid container>
+                <Grid container justify='center'>
                 <Card className={classes.card}>
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>

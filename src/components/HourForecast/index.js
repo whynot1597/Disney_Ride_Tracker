@@ -13,8 +13,9 @@ import iconArray from '../WeatherIcons'
 
 const useStyles = makeStyles(theme => ({
     card: {
-        minWidth: 200,
-        backgroundColor: theme.palette.secondary.main,
+        minWidth: 100,
+        minHeight: 200,
+        backgroundColor: theme.palette.primary.main,
         margin: theme.spacing(1),
     },
     title: {
@@ -40,9 +41,9 @@ const HourForecast = props => {
     });
     const formatTime = timeString => {
         const timeObject = new Date(timeString)
-        const hours = timeObject.hours()
-        const AMorPM = null
-        if (hours >= 12) {
+        let hours = timeObject.getHours()
+        let AMorPM = null
+        if (hours > 12) {
             AMorPM = 'PM'
             hours = hours % 12
         } else {
@@ -53,10 +54,10 @@ const HourForecast = props => {
     const handleChange = name => event => {
         try {
             isMetric = event.target.checked
-            const formatTime = formatTime(prediction.DateTime)
+            const formatedTime = formatTime(prediction.DateTime)
             setState({
                 ...state,
-                currentTime: formatTime,
+                currentTime: formatedTime,
                 currentTemp: prediction.Temperature.Value,
                 currentText: prediction.WeatherText,
                 currentIcon: prediction.WeatherIcon - 1,
@@ -91,7 +92,7 @@ const HourForecast = props => {
 
                     </CardActions>
                 </Card>
-                <Grid component="label" container alignItems="right" spacing={0}>
+                {/* <Grid component="label" container alignItems="right" spacing={0}>
                     <Grid item>Imperial (F, mph)</Grid>
                     <Grid item>
                         <Switch
@@ -102,7 +103,7 @@ const HourForecast = props => {
                         />
                     </Grid>
                     <Grid item>Metric (C, km/h)</Grid>
-                </Grid>
+                </Grid> */}
             </Grid>
             </Typography>
         </div>
