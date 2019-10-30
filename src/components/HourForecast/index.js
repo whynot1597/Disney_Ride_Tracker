@@ -25,35 +25,44 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const WeatherGraphic = props => {
-    const { results } = props
+const HourForecast = props => {
+    const { prediction } = props
+    console.log(prediction)
 
     let isMetric = false
 
     const [state, setState] = React.useState({
         tempSymbol: 'F',
-        system: 'Imperial',
         currentTemp: '--',
         currentText: '--',
         currentIcon: undefined,
-        feelTemp: '--',
-        currentSpeed: '--',
-        windSymbol: 'mph',
+        currentTime: '--'
     });
+    const formatTime = timeString => {
+        const timeObject = new Date(timeString)
+        const hours = timeObject.hours()
+        const AMorPM = null
+        if (hours >= 12) {
+            AMorPM = 'PM'
+            hours = hours % 12
+        } else {
+            AMorPM = 'AM'
+        }
+        return `${hours} ${AMorPM}`
+    }
     const handleChange = name => event => {
         try {
             isMetric = event.target.checked
+            const formatTime = formatTime(prediction.DateTime)
             setState({
                 ...state,
-                tempSymbol: isMetric ? 'C' : 'F',
-                currentTemp: isMetric ? results.Temperature.Metric.Value : results.Temperature.Imperial.Value,
-                feelTemp: isMetric ? results.RealFeelTemperature.Metric.Value : results.RealFeelTemperature.Imperial.Value,
-                currentText: results.WeatherText,
-                currentIcon: results.WeatherIcon - 1,
-                windSymbol: isMetric ? 'km/h' : 'mph',
-                currentSpeed: isMetric ? results.Wind.Speed.Metric.Value : results.Wind.Speed.Imperial.Value,
+                currentTime: formatTime,
+                currentTemp: prediction.Temperature.Value,
+                currentText: prediction.WeatherText,
+                currentIcon: prediction.WeatherIcon - 1,
             })
         } catch (error) {
+            console.log(error)
             alert('Please Refresh')
         }
     }
@@ -66,7 +75,7 @@ const WeatherGraphic = props => {
                 <Card className={classes.card}>
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Current Weather
+                            {state.currentTime}
                             </Typography>
                         <Typography variant="h5" component="h2">
                             {state.currentTemp} °{state.tempSymbol}
@@ -76,34 +85,6 @@ const WeatherGraphic = props => {
                         </Typography>
                         <Typography variant="subtitle1" component="h2">
                             {state.currentText}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-
-                    </CardActions>
-                </Card>
-
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Real Feel
-                            </Typography>
-                        <Typography variant="h5" component="h2">
-                            {state.feelTemp} °{state.tempSymbol}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-
-                    </CardActions>
-                </Card>
-
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Wind
-                            </Typography>
-                        <Typography variant="h5" component="h2">
-                            {state.currentSpeed} {state.windSymbol}
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -128,4 +109,4 @@ const WeatherGraphic = props => {
     )
 }
 
-export default WeatherGraphic
+export default HourForecast

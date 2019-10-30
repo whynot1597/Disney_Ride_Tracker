@@ -3,6 +3,7 @@ import React from 'react'
 //import { initMap } from '../GoogleMapAPI'
 
 const GoogleMap = () => {
+  
   return (
     <h2>map</h2>
   )
