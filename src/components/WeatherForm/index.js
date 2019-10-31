@@ -32,7 +32,7 @@ const WeatherForm = () => {
     }
 
     return (
-        <div onLoad={handleUpdate}>
+        <div>
             <WeatherGraphic results={currentWeather}/>
             <ForecastGraphic results={forecastWeather} />
             <button onClick={handleUpdate}>Refresh</button>

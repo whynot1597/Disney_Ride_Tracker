@@ -16,13 +16,10 @@ const useStyles = makeStyles(theme => ({
         minWidth: 100,
         minHeight: 200,
         backgroundColor: theme.palette.primary.main,
-        margin: theme.spacing(1),
+        margin: theme.spacing(.2),
     },
     title: {
         fontSize: 20,
-    },
-    pos: {
-        marginBottom: 1,
     },
 }));
 
@@ -67,8 +64,7 @@ const HourForecast = props => {
             alert('Please Refresh')
         }
     }
-    const classes = useStyles();
-
+    const classes = useStyles() 
     return (
         <div className="WeatherGraphic">
             <Typography component="div" align='center'>
