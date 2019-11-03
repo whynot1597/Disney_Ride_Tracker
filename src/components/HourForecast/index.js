@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const HourForecast = props => {
-    const { prediction } = props
+    const { prediction  } = props
     console.log(prediction)
 
     let isMetric = false

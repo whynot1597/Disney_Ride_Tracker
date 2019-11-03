@@ -51,13 +51,19 @@ const WeatherGraphic = props => {
                 currentSpeed: isMetric ? results.Wind.Speed.Metric.Value : results.Wind.Speed.Imperial.Value,
             })
         } catch (error) {
+            console.log(error)
             alert('Please Refresh')
         }
     }
     const classes = useStyles();
 
+    React.useEffect(handleChange())
+
     return (
         <div className="WeatherGraphic">
+            <Typography variant="h5" component="h2" align='center'>
+            Current Conditions
+            </Typography>
             <Typography component="div" align='center'>
                 <Grid container justify='center'>
                 <Card className={classes.card}>
@@ -107,12 +113,13 @@ const WeatherGraphic = props => {
 
                     </CardActions>
                 </Card>
-                <Grid component="label" container alignItems="right" spacing={0}>
+                <Grid component="label" container spacing={0}>
                     <Grid item>Imperial (F, mph)</Grid>
                     <Grid item>
                         <Switch
                             checked={state.isMetric}
-                            onChange={handleChange()}
+                            disabled={results === {}}
+                            onClick={handleChange}
                             value="isMetric"
                             inputProps={{ 'aria-label': 'checkbox with default color' }}
                         />

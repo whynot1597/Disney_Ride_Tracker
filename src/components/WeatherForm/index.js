@@ -9,11 +9,9 @@ import ForecastGraphic from '../ForecastGraphic'
 
 const WeatherForm = () => {
     const [error, setError] = useState(null)
-    const [query, setQuery] = useState('')
     const [currentWeather, setCurrentWeather] = useState({})
     const [forecastWeather, setForecastWeather] = useState([])
 
-    const handleQueryChange = event => setQuery(event.target.value)
 
     const handleUpdate = async event => {
         event.preventDefault()
@@ -25,15 +23,17 @@ const WeatherForm = () => {
             const forecast = await searchForecast()
             setCurrentWeather(current)
             setForecastWeather(forecast)
-            //console.log(temperature)
+            console.log(forecast)
         } catch (error) {
             setError('Sorry, but something went wrong.')
         }
     }
 
+
+    React.useEffect(handleUpdate)
     return (
         <div>
-            <WeatherGraphic results={currentWeather}/>
+            <WeatherGraphic results={currentWeather} />
             <ForecastGraphic results={forecastWeather} />
             <button onClick={handleUpdate}>Refresh</button>
         </div>

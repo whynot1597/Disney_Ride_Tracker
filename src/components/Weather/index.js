@@ -2,14 +2,16 @@ import React from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 
 import WeatherForm from '../WeatherForm'
+import { Typography } from '@material-ui/core';
 
 const WeatherPage = () => (
     <AuthUserContext.Consumer>
       {authUser => (
         <div>
-          <h1>Weather Page</h1>
+          <Typography variant="h3" component="h2" align='center'>
+            Weather for Disneyland 
+          </Typography>
           <WeatherForm />
-          <h2>Data</h2>
         </div>
       )}
     </AuthUserContext.Consumer>

@@ -16,7 +16,9 @@ const ForecastGraphic = props => {
     const forecastArray = forecast.results
     return (
         <div className="ForecastGraphic">
-            <h2>Forecast</h2>
+            <Typography variant="h5" component="h2" align='center'>
+            12 Hour Forecast
+            </Typography>
             <Grid container justify='center'>
                 {forecastArray.map(prediction => <HourForecast key={prediction.EpochDateTime} prediction={prediction} />)}
             </Grid>
